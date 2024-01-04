@@ -7,7 +7,7 @@ static void usage(const char *prog) {
             "IoT-SDK v.%s\n"
             "Usage: %s OPTIONS\n"
             "  -x PATH   - iot rpc lua script, default: '%s'\n"
-            "  -s ADDDR  - mqtt server address, default: '%s'\n"
+            "  -s ADDR  - mqtt server address, default: '%s'\n"
             "  -k n      - mqtt timeout, default: '%d'\n"
             "  -v LEVEL  - debug level, from 0 to 4, default: %d\n",
             MG_VERSION, prog, "/www/iot/iot-rpc.lua", MQTT_LISTEN_ADDR, 6, MG_LL_INFO);
