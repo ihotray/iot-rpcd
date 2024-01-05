@@ -2,15 +2,17 @@
 #include <iot/iot.h>
 #include "rpc.h"
 
+#define RPC_LUA_SCRIPT "/www/iot/iot-rpc.lua"
+
 static void usage(const char *prog) {
     fprintf(stderr,
             "IoT-SDK v.%s\n"
             "Usage: %s OPTIONS\n"
             "  -x PATH   - iot rpc lua script, default: '%s'\n"
-            "  -s ADDR  - mqtt server address, default: '%s'\n"
-            "  -k n      - mqtt timeout, default: '%d'\n"
+            "  -s ADDR   - local mqtt server address, default: '%s'\n"
+            "  -a n      - local mqtt keeplive, default: '%d'\n"
             "  -v LEVEL  - debug level, from 0 to 4, default: %d\n",
-            MG_VERSION, prog, "/www/iot/iot-rpc.lua", MQTT_LISTEN_ADDR, 6, MG_LL_INFO);
+            MG_VERSION, prog, RPC_LUA_SCRIPT, MQTT_LISTEN_ADDR, 6, MG_LL_INFO);
 
     exit(EXIT_FAILURE);
 }
@@ -18,7 +20,7 @@ static void usage(const char *prog) {
 int main(int argc, char *argv[]) {
 
     struct rpc_option opts = {
-	.iot_rpc_lua = "/www/iot/iot-rpc.lua",
+        .iot_rpc_lua = RPC_LUA_SCRIPT,
         .mqtt_serve_address = MQTT_LISTEN_ADDR,
         .mqtt_keepalive = 6,
         .debug_level = MG_LL_INFO
@@ -30,7 +32,7 @@ int main(int argc, char *argv[]) {
             opts.iot_rpc_lua = argv[++i];
         } else if (strcmp(argv[i], "-s") == 0) {
             opts.mqtt_serve_address = argv[++i];
-        } else if (strcmp(argv[i], "-k") == 0) {
+        } else if (strcmp(argv[i], "-a") == 0) {
             opts.mqtt_keepalive = atoi(argv[++i]);
             if (opts.mqtt_keepalive < 6) {
                 opts.mqtt_keepalive = 6;
